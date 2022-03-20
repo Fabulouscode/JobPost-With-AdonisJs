@@ -20,8 +20,11 @@ Route.get('/', 'JobController.home');
 
 Route.post('users', 'UserController.store').validator('User')
 
-Route.post('/login', 'UserController.login').validator('LoginUser');
+Route.on('/signup').render('auth.signup');
 Route.post('/signup', 'UserController.create').validator('CreateUser');
+
+Route.on('/login').render('auth.login');
+Route.post('/login', 'UserController.login').validator('LoginUser');
 
 Route.get('/post-a-job', 'JobController.userIndex');
 
@@ -29,6 +32,7 @@ Route.group(() => {
     Route.get('/delete/:id', 'JobController.delete');
     Route.get('/edit/:id', 'JobController.edit');
     Route.post('/update/:id', 'JobController.update').validator('CreateJob');
+    Route.post('/', 'JobController.create').validator('CreateJob');
 }).prefix('/post-a-job');
 
 Route.get('/logout', async ({ auth, response }) => {
